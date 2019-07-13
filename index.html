@@ -5,7 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Vamos al mercado</title>
+    <link
+        rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+        integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+        crossorigin="anonymous"
+    />
     <link rel="shortcut icon" href="favicon.png" />
+    <link rel="stylesheet" href="main.css">
 
 </head>
 <body>
@@ -15,30 +22,30 @@
             <h2 class="header__subtitle">Nombre del plato</h2>
         </header>
         <main>
-            <div class="main__selectors">
+            <div class="main__selectors d-flex">
                 <p class="select__item">Seleccionar todo</p>
                 <p class="unselect__item">Deseleccionar todo</p>
             </div>
             <div class="main__content">
-                <ul class="main__list">
+                <ul class="main__list list-group">
 
                 </ul>
             </div>
-            <div class="main__numbers">
+            <div class="main__numbers d-flex flex-column justify-content-center">
                 <p class="items__selected">items: 0</p>
-                <div class="subtotal__container">
+                <div class="subtotal__container d-flex justify-content-between">
                     <h3 class="subtotal__title">Subtotal</h3>
                     <p class="subtotal__ammount">0 €</p>
                 </div>
-                <div class="shipping__container">
+                <div class="shipping__container d-flex justify-content-between">
                         <h3 class="shipping__title">Gastos de envío</h3>
                         <p class="shipping__cost">0 €</p>
                 </div>
-                <div class="total__container">
+                <div class="total__container d-flex justify-content-between">
                         <h3 class="total__title">Total</h3>
                         <p class="total__ammount">0 €</p>
                 </div>
-                <button class="purchase__btn">Comprar ingredientes: 0 €</button>
+                <a href="#purchase" class="purchase__btn btn btn-success">Comprar ingredientes: 0 €</a>
             </div>
         </main>
         <footer>

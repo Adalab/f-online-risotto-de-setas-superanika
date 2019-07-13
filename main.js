@@ -51,6 +51,8 @@ function createIngredient (data){
         const id = ingredient.product.replace(/ /g, "")
         //create li
         const listItem = createItems('li');
+        listItem.classList.add('list-group-item', 'd-flex', 'flex-row', 'justify-content-start');
+
         list.appendChild(listItem);
         //create checkbox
         const checkbox = createItems('input');
@@ -61,8 +63,8 @@ function createIngredient (data){
         checkbox.name = 'ingredientsToPurchase';
         listItem.appendChild(checkbox);        
         checkbox.addEventListener('change', () => {
-             const number= parseFloat(ingredient.items);
-             const price= parseFloat(ingredient.price);
+             const number = ingredient.items;
+             const price = ingredient.price;
          
             if(checkbox.checked) {
                 i = i + number;
@@ -82,8 +84,8 @@ function createIngredient (data){
 
         let ingredientObj = {
             checkbox: checkbox,
-            number: parseFloat(ingredient.items),
-            subtotal: parseFloat(ingredient.items)* parseFloat(ingredient.price)
+            number: ingredient.items,
+            subtotal: ingredient.items * ingredient.price
         }
         ingredientsArray.push(ingredientObj);
         
@@ -124,9 +126,9 @@ function createIngredient (data){
 function writeTotals() {
     totalPrice = subtotalPrice + shippingCost;
     itemsSelected.innerHTML = 'Items: ' + i;
-    subtotalAmmount.innerHTML = subtotalPrice + ' €';
-    totalAmmount.innerHTML= totalPrice + ' €';
-    purchaseButton.innerHTML= `Comprar ingredientes: ${totalPrice} €`;
+    subtotalAmmount.innerHTML = subtotalPrice.toFixed(2) + ' €';
+    totalAmmount.innerHTML= totalPrice.toFixed(2) + ' €';
+    purchaseButton.innerHTML= `Comprar ingredientes: ${totalPrice.toFixed(2)} €`;
 }
 
 function selectAllItems () {
