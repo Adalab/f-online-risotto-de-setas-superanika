@@ -2,10 +2,17 @@
 
 let recipe = {};
 let i = 0;
+let subtotalPrice = 0;
+let totalPrice = 0;
+let shippingCost= 0;
+let ingredientsArray = [];
 const selectItems = document.querySelector('.select__item');
 const unselectItems = document.querySelector('.unselect__item');
 const itemsSelected = document.querySelector('.items__selected');
-let ingredientsArray = [];
+const subtotalAmmount = document.querySelector('.subtotal__ammount');
+const totalAmmount = document.querySelector('.total__ammount');
+const purchaseButton = document.querySelector('.purchase__btn');
+
 
 
 function getRecipes () {
@@ -13,20 +20,19 @@ function getRecipes () {
     .then(response => response.json())
     .then( data => {
         recipe = data.recipe;
-        console.log(recipe);
         changeTitle (recipe);
         createIngredient(recipe);
         changeShippingCost(recipe);
-    })}
-    
-    
+    })
+}
+ 
 function changeTitle (data) {
     const headerSubtitle = document.querySelector('.header__subtitle');
     headerSubtitle.innerHTML = data.name;
 }
 function changeShippingCost(data) {
-    const shippingCost = document.querySelector('.shipping__cost');
-    shippingCost.innerHTML = data['shipping-cost'] + ' €';
+    const shippingCostText = document.querySelector('.shipping__cost');
+    shippingCostText.innerHTML = data['shipping-cost'] + ' €';
 }
 
 function createItems(element) {
@@ -37,8 +43,9 @@ function createContent(text) {
     return document.createTextNode(text);
 }
 
-
 function createIngredient (data){
+     shippingCost= parseFloat(data['shipping-cost']);
+
     for (const ingredient of data.ingredients) {
         const list = document.querySelector('.main__list');
         const id = ingredient.product.replace(/ /g, "")
@@ -52,32 +59,33 @@ function createIngredient (data){
         checkbox.id = id;
         checkbox.value = id;
         checkbox.name = 'ingredientsToPurchase';
-        listItem.appendChild(checkbox);
-                
-         checkbox.addEventListener('change', () => {
+        listItem.appendChild(checkbox);        
+        checkbox.addEventListener('change', () => {
+             const number= parseFloat(ingredient.items);
+             const price= parseFloat(ingredient.price);
+         
             if(checkbox.checked) {
-                i = i + parseInt(ingredient.items);
-                return   itemsSelected. innerHTML ='Items: ' + i;
+                i = i + number;
+                subtotalPrice= subtotalPrice + (number * price);
             }
             else {
                 if(i === 0) {
                     i = 0;
-                    return     itemsSelected. innerHTML ='Items: ' + i;
-
+                    subtotalPrice = 0;
                 }else {
-                    i = i - parseInt(ingredient.items);
-                    return     itemsSelected. innerHTML ='Items: ' + i;
-
+                    i = i - number;
+                    subtotalPrice= subtotalPrice - (number * price);
                 }
             }
+            writeTotals();
         });
 
         let ingredientObj = {
             checkbox: checkbox,
-            number: ingredient.items
+            number: parseFloat(ingredient.items),
+            subtotal: parseFloat(ingredient.items)* parseFloat(ingredient.price)
         }
         ingredientsArray.push(ingredientObj);
-
         
         //create items needed
         const numberOfItems = createItems('p');
@@ -111,28 +119,38 @@ function createIngredient (data){
         const priceAmmount = createContent(ingredient.price + ' €');
         price.appendChild(priceAmmount);
     }
-    
 }
 
+function writeTotals() {
+    totalPrice = subtotalPrice + shippingCost;
+    itemsSelected.innerHTML = 'Items: ' + i;
+    subtotalAmmount.innerHTML = subtotalPrice + ' €';
+    totalAmmount.innerHTML= totalPrice + ' €';
+    purchaseButton.innerHTML= `Comprar ingredientes: ${totalPrice} €`;
+}
 
 function selectAllItems () {
     i = 0;
+    subtotalPrice = 0;
     for (const ingredient of ingredientsArray) {
         ingredient.checkbox.checked = true;
-        i = i + parseInt(ingredient.number);
+        i = i + ingredient.number;
+        subtotalPrice = subtotalPrice + ingredient.subtotal;
     }
-    itemsSelected.innerHTML = 'Items: ' + i;
+    writeTotals();
  }
- selectItems.addEventListener('click', selectAllItems);
 
  function unselectAllItems () {
     i = 0;
+    subtotalPrice = 0;
+    
     for (const ingredient of ingredientsArray) {
         ingredient.checkbox.checked = false;
     }
-    itemsSelected.innerHTML = 'Items: ' + i;
+    writeTotals();
  }
 
+ selectItems.addEventListener('click', selectAllItems);
  unselectItems.addEventListener('click', unselectAllItems);
 
 
