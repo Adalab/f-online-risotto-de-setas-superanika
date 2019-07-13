@@ -1,6 +1,12 @@
 'use strict';
 
 let recipe = {};
+let i = 0;
+const selectItems = document.querySelector('.select__item');
+const unselectItems = document.querySelector('.unselect__item');
+const itemsSelected = document.querySelector('.items__selected');
+let ingredientsArray = [];
+
 
 function getRecipes () {
     fetch('https://raw.githubusercontent.com/Adalab/recipes-data/master/rissoto-setas.json')
@@ -9,15 +15,18 @@ function getRecipes () {
         recipe = data.recipe;
         console.log(recipe);
         changeTitle (recipe);
-        createIngredients(recipe);
-    }
-        )
-    }
+        createIngredient(recipe);
+        changeShippingCost(recipe);
+    })}
     
     
 function changeTitle (data) {
-    const header__subtitle = document.querySelector('.header__subtitle');
-    header__subtitle.innerHTML = data.name;
+    const headerSubtitle = document.querySelector('.header__subtitle');
+    headerSubtitle.innerHTML = data.name;
+}
+function changeShippingCost(data) {
+    const shippingCost = document.querySelector('.shipping__cost');
+    shippingCost.innerHTML = data['shipping-cost'] + ' €';
 }
 
 function createItems(element) {
@@ -28,7 +37,8 @@ function createContent(text) {
     return document.createTextNode(text);
 }
 
-function createIngredients (data){
+
+function createIngredient (data){
     for (const ingredient of data.ingredients) {
         const list = document.querySelector('.main__list');
         const id = ingredient.product.replace(/ /g, "")
@@ -43,6 +53,32 @@ function createIngredients (data){
         checkbox.value = id;
         checkbox.name = 'ingredientsToPurchase';
         listItem.appendChild(checkbox);
+                
+         checkbox.addEventListener('change', () => {
+            if(checkbox.checked) {
+                i = i + parseInt(ingredient.items);
+                return   itemsSelected. innerHTML ='Items: ' + i;
+            }
+            else {
+                if(i === 0) {
+                    i = 0;
+                    return     itemsSelected. innerHTML ='Items: ' + i;
+
+                }else {
+                    i = i - parseInt(ingredient.items);
+                    return     itemsSelected. innerHTML ='Items: ' + i;
+
+                }
+            }
+        });
+
+        let ingredientObj = {
+            checkbox: checkbox,
+            number: ingredient.items
+        }
+        ingredientsArray.push(ingredientObj);
+
+        
         //create items needed
         const numberOfItems = createItems('p');
         listItem.appendChild(numberOfItems);
@@ -78,4 +114,28 @@ function createIngredients (data){
     
 }
 
-getRecipes();
+
+function selectAllItems () {
+    i = 0;
+    for (const ingredient of ingredientsArray) {
+        ingredient.checkbox.checked = true;
+        i = i + parseInt(ingredient.number);
+    }
+    itemsSelected.innerHTML = 'Items: ' + i;
+ }
+ selectItems.addEventListener('click', selectAllItems);
+
+ function unselectAllItems () {
+    i = 0;
+    for (const ingredient of ingredientsArray) {
+        ingredient.checkbox.checked = false;
+    }
+    itemsSelected.innerHTML = 'Items: ' + i;
+ }
+
+ unselectItems.addEventListener('click', unselectAllItems);
+
+
+ getRecipes();
+
+
