@@ -63,7 +63,7 @@ function createIngredient (data){
         checkbox.name = 'ingredientsToPurchase';
         listItem.appendChild(checkbox);        
         checkbox.addEventListener('change', () => {
-             const number = ingredientObj.number;
+             const number = parseFloat(ingredientObj.numberInput.value);
              const price = ingredient.price;
             if(checkbox.checked) {
                 i = i + number;
@@ -94,7 +94,6 @@ function createIngredient (data){
         numberOfItems.addEventListener('change', (event => {
             const newNumber = event.currentTarget.value;
             ingredientObj = {...ingredientObj, number: newNumber};
-            
             numberOfItems.value = ingredientObj.number;
         }))
         //create div with product details
@@ -132,8 +131,8 @@ function createIngredient (data){
 
         let ingredientObj = {
             checkbox: checkbox,
-            number: ingredient.items,
-            price: ingredient.price,
+            number: parseFloat(ingredient.items),
+            price: parseFloat(ingredient.price),
             numberInput: numberOfItems
         }
         ingredientsArray.push(ingredientObj);
@@ -153,10 +152,10 @@ function selectAllItems () {
     subtotalPrice = 0;
     for (const ingredient of ingredientsArray) {
         const numberOfItems= ingredient.numberInput;
-        const number = ingredient.numberInput.value;
+        const number = parseFloat(ingredient.numberInput.value);
         const price = ingredient.price;
         ingredient.checkbox.checked = true;
-        i = i + ingredient.number;
+        i = i + number;
         subtotalPrice = subtotalPrice + (number * price);
         numberOfItems.setAttribute('disabled', true);
         numberOfItems.classList.add('disabled');

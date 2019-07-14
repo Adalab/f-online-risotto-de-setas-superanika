@@ -13,10 +13,7 @@ body {
 .header__subtitle {
     padding-left: 10px;
 }
-.main__selectors {
-    margin-bottom: 10px;
-    border-bottom: 1px solid blue;
-}
+
 
 .unstyled-button {
     border: none;
@@ -33,14 +30,14 @@ body {
     grid-gap: 10px;
     justify-content: center;
     align-items: center;
+    border-left: none;
+    border-right: none;
+
 }
 .items__number {
    background-color: white;
    width: 40px;
    height: 40px;
-   display: flex;
-   flex-direction: row;
-   justify-content: center;
    color: blue;
    font-size: 25px;
    text-align: center;
@@ -51,10 +48,13 @@ body {
 .list-item {
     list-style: none;
 }
-
+.list-group-item:first-child {
+    border-top: 1px solid blue;
+}
 .list-group-item:nth-child(2n) {
     background-color: rgb(232, 231, 231);
 }
+
 .product__name {
     margin-bottom: 0;
     font-size: 14px;
@@ -86,13 +86,19 @@ body {
 }
 .footer {
     width: 100vw;
-    border-top: 1px solid grey;
+    border-top: 1px solid lightgray;
     text-align: center;
     padding-top: 10px;
 }
 @media all and (min-width: 768px){
     .page {
-        width: 80vw;
+        width: inherit;
         border: 1px solid lightgray;
+        margin: 50px 0;
     }
+   
+    .footer {
+        width: 100%;
+    }
+
 }
