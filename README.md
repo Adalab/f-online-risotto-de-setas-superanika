@@ -1,4 +1,4 @@
-# Rissoto de setas
+# Risotto de setas
 
 Nuestro mercado favorito tiene un servicio nuevo en el que cada día podemos pedir un plato y nos permite hacer un pedido con
 los ingredientes, hoy toca Risotto de setas vegano.
