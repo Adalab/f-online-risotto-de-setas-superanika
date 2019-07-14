@@ -6,7 +6,7 @@ los ingredientes, hoy toca Risotto de setas vegano.
 Con esta simple aplicación podrás hacer la compra, seleccionar los ingredientes que quieres comprar y la cantidad de ellos, 
 y saber en todo momento cuanto va a ser el coste de la compra.
 
-Está realizada con HTML, CSS, Javascript y con una pequeña ayuda de Bootstrap.
+Está realizada con HTML, CSS, Javascript y con una pequeña ayuda de Bootstrap.  Es responsive, se adapta a todo tipo de dispositivos.
 
 Si te ha gustado, la puedes clonar en el siguiente enlace: https://github.com/Adalab/f-online-risotto-de-setas-superanika.git
 
