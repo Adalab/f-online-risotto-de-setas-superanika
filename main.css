@@ -15,7 +15,7 @@ body {
     font-size: 11px;
 }
 .header__subtitle {
-    padding-left: 10px;
+    box-sizing: border-box;
 }
 .title__wrapper {
     display: flex;
