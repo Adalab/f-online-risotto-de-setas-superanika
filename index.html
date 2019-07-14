@@ -15,16 +15,16 @@
     <link rel="stylesheet" href="main.css">
 
 </head>
-<body>
-    <div class="page">
+<body class="d-flex flex-column align-items-center">
+    <div class="page d-flex flex-column align-items-center">
         <header>
-            <h1 class="header__title">Ingredientes</h1>
+            <h1 class="header__title text-uppercase text-muted">Ingredientes</h1>
             <h2 class="header__subtitle">Nombre del plato</h2>
         </header>
-        <main>
-            <div class="main__selectors d-flex">
-                <p class="select__item">Seleccionar todo</p>
-                <p class="unselect__item">Deseleccionar todo</p>
+        <main class="main">
+            <div class="main__selectors d-flex border-bottom border-primary">
+                <button class="select__item text-primary unstyled-button">Seleccionar todo</button>
+                <button class="unselect__item text-primary unstyled-button">Deseleccionar todo</button>
             </div>
             <div class="main__content">
                 <ul class="main__list list-group">

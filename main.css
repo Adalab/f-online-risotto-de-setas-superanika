@@ -2,7 +2,54 @@ body {
     margin: 0;
     padding: 0;
 }
+.page {
+    width: 80vw;
+}
+.header__title {
+    margin-top: 50px;
+    font-size: 11px;
+}
+.main__selectors {
+    margin-bottom: 10px;
+    border-bottom: 1px solid blue;
+}
 
+.unstyled-button {
+    border: none;
+    background: white;
+    margin-bottom: 5px;
+}
+
+.select__item {
+    border-right: 1px solid blue;
+}
+.list-group-item {
+    display: grid;
+    grid-template-columns: 0.5fr 1fr 6fr 1fr;
+    grid-gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+.items__number {
+   background-color: white;
+   width: 40px;
+   height: 40px;
+   display: flex;
+   flex-direction: row;
+   justify-content: center;
+   color: blue;
+   text-align: center;
+}
 .main__numbers {
     margin: 20px 40px;
+}
+.list-item {
+    list-style: none;
+}
+
+.list-group-item:nth-child(2n) {
+    background-color: rgb(232, 231, 231);
+}
+.disabled {
+    color: lightgrey;
 }

@@ -51,8 +51,7 @@ function createIngredient (data){
         const id = ingredient.product.replace(/ /g, "")
         //create li
         const listItem = createItems('li');
-        listItem.classList.add('list-group-item', 'd-flex', 'flex-row', 'justify-content-start');
-
+        listItem.classList.add('list-group-item');
         list.appendChild(listItem);
         //create checkbox
         const checkbox = createItems('input');
@@ -63,63 +62,84 @@ function createIngredient (data){
         checkbox.name = 'ingredientsToPurchase';
         listItem.appendChild(checkbox);        
         checkbox.addEventListener('change', () => {
-             const number = ingredient.items;
+             const number = ingredientObj.number;
              const price = ingredient.price;
-         
             if(checkbox.checked) {
                 i = i + number;
                 subtotalPrice= subtotalPrice + (number * price);
+                numberOfItems.setAttribute('disabled', true);
+                numberOfItems.classList.add('disabled');
             }
             else {
                 if(i === 0) {
                     i = 0;
                     subtotalPrice = 0;
+                    numberOfItems.classList.remove('disabled');
+                    numberOfItems.removeAttribute('disabled');
+
+
                 }else {
                     i = i - number;
                     subtotalPrice= subtotalPrice - (number * price);
+                    numberOfItems.classList.remove('disabled');
+                    numberOfItems.removeAttribute('disabled');
+
                 }
             }
             writeTotals();
         });
-
-        let ingredientObj = {
-            checkbox: checkbox,
-            number: ingredient.items,
-            subtotal: ingredient.items * ingredient.price
-        }
-        ingredientsArray.push(ingredientObj);
-        
         //create items needed
-        const numberOfItems = createItems('p');
+        const numberOfItems = createItems('input');
+        numberOfItems.classList.add('border', 'border-primary', 'items__number');
         listItem.appendChild(numberOfItems);
-        const numberOfItemsNeeded = createContent(ingredient.items);
-        numberOfItems.appendChild(numberOfItemsNeeded);
+        numberOfItems.value = ingredient.items;
+        numberOfItems.type = 'number';
+        numberOfItems.addEventListener('change', (event => {
+            const newNumber = event.currentTarget.value;
+            ingredientObj = {...ingredientObj, number: newNumber};
+            
+            numberOfItems.value = ingredientObj.number;
+        }))
         //create div with product details
         const productDetails = createItems('ul');
+        productDetails.classList.add('list-group');
         listItem.appendChild(productDetails);
         //create name
         const product = createItems('li');
+        product.classList.add('list-item');
         const label = createItems('label');
         label.setAttribute('for', id);
+        label.classList.add('font-weight-bold');
         product.appendChild(label);
         productDetails.appendChild(product);
         const productName = createContent(ingredient.product);
         label.appendChild(productName);
         //create brand
         const brand = createItems('li');
+        brand.classList.add('list-item');
         productDetails.appendChild(brand);
         const brandName = createContent(ingredient.brand ? ingredient.brand : 'sin marca');
         brand.appendChild(brandName);
         //create quantity
         const quantity = createItems('li');
+        quantity.classList.add('list-item');
         productDetails.appendChild(quantity);
         const quantityNeeded = createContent(ingredient.quantity);
         quantity.appendChild(quantityNeeded);
         //create price 
         const price = createItems('p');
+        price.classList.add('price__container');
         listItem.appendChild(price);
         const priceAmmount = createContent(ingredient.price + ' €');
         price.appendChild(priceAmmount);
+
+        let ingredientObj = {
+            checkbox: checkbox,
+            number: ingredient.items,
+            price: ingredient.price,
+            numberInput: numberOfItems
+        }
+        ingredientsArray.push(ingredientObj);
     }
 }
 
@@ -135,9 +155,14 @@ function selectAllItems () {
     i = 0;
     subtotalPrice = 0;
     for (const ingredient of ingredientsArray) {
+        const numberOfItems= ingredient.numberInput;
+        const number = ingredient.numberInput.value;
+        const price = ingredient.price;
         ingredient.checkbox.checked = true;
         i = i + ingredient.number;
-        subtotalPrice = subtotalPrice + ingredient.subtotal;
+        subtotalPrice = subtotalPrice + (number * price);
+        numberOfItems.setAttribute('disabled', true);
+        numberOfItems.classList.add('disabled');
     }
     writeTotals();
  }
@@ -147,7 +172,10 @@ function selectAllItems () {
     subtotalPrice = 0;
     
     for (const ingredient of ingredientsArray) {
+        const numberOfItems= ingredient.numberInput;
         ingredient.checkbox.checked = false;
+        numberOfItems.classList.remove('disabled');
+        numberOfItems.removeAttribute('disabled');
     }
     writeTotals();
  }
