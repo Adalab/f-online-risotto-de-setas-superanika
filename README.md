@@ -8,6 +8,8 @@ y saber en todo momento cuanto va a ser el coste de la compra.
 
 Está realizada con HTML, CSS, Javascript y con una pequeña ayuda de Bootstrap.
 
+Si te ha gustado, la puedes clonar en el siguiente enlace: https://github.com/Adalab/f-online-risotto-de-setas-superanika.git
+
 ![Screenshot](screenshot.png) 
 
 ¡Buen provecho!
