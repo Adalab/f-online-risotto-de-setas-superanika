@@ -8,7 +8,7 @@ let shippingCost= 0;
 let ingredientsArray = [];
 const selectItems = document.querySelector('.select__item');
 const unselectItems = document.querySelector('.unselect__item');
-const itemsSelected = document.querySelector('.items__selected');
+const itemsSelected = document.querySelector('.items__number__selected');
 const subtotalAmmount = document.querySelector('.subtotal__ammount');
 const totalAmmount = document.querySelector('.total__ammount');
 const purchaseButton = document.querySelector('.purchase__btn');
@@ -23,6 +23,7 @@ function getRecipes () {
         changeTitle (recipe);
         createIngredient(recipe);
         changeShippingCost(recipe);
+        writeTotals();
     })
 }
  
@@ -74,17 +75,13 @@ function createIngredient (data){
                 if(i === 0) {
                     i = 0;
                     subtotalPrice = 0;
-                    numberOfItems.classList.remove('disabled');
-                    numberOfItems.removeAttribute('disabled');
-
-
                 }else {
                     i = i - number;
                     subtotalPrice= subtotalPrice - (number * price);
-                    numberOfItems.classList.remove('disabled');
-                    numberOfItems.removeAttribute('disabled');
-
                 }
+                numberOfItems.classList.remove('disabled');
+                numberOfItems.removeAttribute('disabled');
+
             }
             writeTotals();
         });
@@ -109,26 +106,26 @@ function createIngredient (data){
         product.classList.add('list-item');
         const label = createItems('label');
         label.setAttribute('for', id);
-        label.classList.add('font-weight-bold');
+        label.classList.add('font-weight-bold', 'product__name');
         product.appendChild(label);
         productDetails.appendChild(product);
         const productName = createContent(ingredient.product);
         label.appendChild(productName);
         //create brand
         const brand = createItems('li');
-        brand.classList.add('list-item');
+        brand.classList.add('list-item', 'brand__name');
         productDetails.appendChild(brand);
-        const brandName = createContent(ingredient.brand ? ingredient.brand : 'sin marca');
+        const brandName = createContent(ingredient.brand ? ingredient.brand : '');
         brand.appendChild(brandName);
         //create quantity
         const quantity = createItems('li');
-        quantity.classList.add('list-item');
+        quantity.classList.add('list-item', 'quantity__needed');
         productDetails.appendChild(quantity);
         const quantityNeeded = createContent(ingredient.quantity);
         quantity.appendChild(quantityNeeded);
         //create price 
         const price = createItems('p');
-        price.classList.add('price__container');
+        price.classList.add('price__container', 'text-success');
         listItem.appendChild(price);
         const priceAmmount = createContent(ingredient.price + ' €');
         price.appendChild(priceAmmount);
@@ -145,7 +142,7 @@ function createIngredient (data){
 
 function writeTotals() {
     totalPrice = subtotalPrice + shippingCost;
-    itemsSelected.innerHTML = 'Items: ' + i;
+    itemsSelected.innerHTML = i;
     subtotalAmmount.innerHTML = subtotalPrice.toFixed(2) + ' €';
     totalAmmount.innerHTML= totalPrice.toFixed(2) + ' €';
     purchaseButton.innerHTML= `Comprar ingredientes: ${totalPrice.toFixed(2)} €`;
